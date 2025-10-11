@@ -19,7 +19,6 @@ export function EntryNotFound() {
         }, 1000);
         return () => {
             clearInterval(intID);
-            console.log("CLEAR");
         };
     }, []);
 

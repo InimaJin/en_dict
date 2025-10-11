@@ -1,7 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import SearchPage, { searchAction } from "./search_page.jsx";
+import History, { searchAction } from "./search_page.jsx";
 import App from "./App.jsx";
 import DictPage, { dictPageLoader } from "./dict_page.jsx";
 import { EntryNotFound } from "./error_elements.jsx";
@@ -18,7 +18,7 @@ const router = createBrowserRouter([
             {
                 path: "search",
                 action: searchAction,
-                element: <SearchPage />,
+                element: <History />,
             },
             {
                 path: "search/:query",

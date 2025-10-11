@@ -169,3 +169,31 @@ ul {
         font-weight: bold;
     }
 }
+
+.history {
+    h2 {
+        margin-bottom: 16px;
+        font-size: 1.4rem;
+    }
+
+    h2,
+    li {
+        padding-left: 24px;
+    }
+
+    ul {
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-flow: column;
+        align-items: stretch;
+        justify-content: start;
+        gap: 12px;
+
+        a {
+            text-decoration: none;
+            color: black;
+            font-size: 1.2rem;
+        }
+    }
+}

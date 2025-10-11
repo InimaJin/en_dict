@@ -9,10 +9,10 @@ function Header() {
 
     return (
         <header className="main-header">
-            <Link to={"/"}>
+            <Link to={"/"} aria-label="home">
                 <i className="bx bx-home"></i>
             </Link>
-            <Link to={"/search"}>
+            <Link to={"/search"} aria-label="search">
                 <i className="bx bx-search"></i>
             </Link>
         </header>

@@ -9,6 +9,17 @@ export async function dictPageLoader({ params }) {
         throw new Error(query);
     }
 
+    let history = localStorage.getItem("history");
+    history = history ? JSON.parse(history) : [];
+    for (let i = 0; i < history.length; i++) {
+        if (history[i] === query) {
+            history.splice(i, 1);
+            break;
+        }
+    }
+    history.push(query);
+    localStorage.setItem("history", JSON.stringify(history));
+
     return await response.json();
 }
 

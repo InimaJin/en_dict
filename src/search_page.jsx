@@ -1,8 +1,8 @@
-import { redirect, Form } from "react-router-dom";
+import { redirect, Form, Link } from "react-router-dom";
 
 export async function searchAction({ request }) {
     const data = await request.formData();
-    const query = data.get("query").trim();
+    const query = data.get("query").trim().toLowerCase();
     if (!query) {
         return redirect("/search");
     }
@@ -29,7 +29,22 @@ export function SearchHeader() {
     );
 }
 
-export default function SearchPage() {
-    //TODO: list of past queries
-    return <ul></ul>;
+export default function History() {
+    let history = localStorage.getItem("history");
+    history = history ? JSON.parse(history) : [];
+
+    return (
+        <div className="history">
+            <h2>Recent queries</h2>
+            <ul>
+                {history.toReversed().map((query) => {
+                    return (
+                        <Link to={`/search/${query}`} key={query}>
+                            <li>{query}</li>
+                        </Link>
+                    );
+                })}
+            </ul>
+        </div>
+    );
 }
