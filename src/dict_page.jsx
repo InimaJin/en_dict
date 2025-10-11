@@ -5,8 +5,11 @@ export async function dictPageLoader({ params }) {
     const query = params.query;
     const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${query}`;
     const response = await fetch(url);
-    const json = await response.json();
-    return json;
+    if (!response.ok) {
+        throw new Error(query);
+    }
+
+    return await response.json();
 }
 
 export default function DictPage() {
@@ -58,14 +61,20 @@ function Word({ word }) {
                 <h2>
                     {word.word} {word.phonetic && `- ${word.phonetic}`}
                 </h2>
-                <button onClick={() => {
-                    setActive(!active); 
-                }}>
-                    <i className={`bx bx-chevron-${active ? "down" : "left"}`}></i>
+                <button
+                    onClick={() => {
+                        setActive(!active);
+                    }}
+                >
+                    <i
+                        className={`bx bx-chevron-${active ? "down" : "left"}`}
+                    ></i>
                 </button>
             </div>
-            <ul className={`meanings-list ${active ? "active" : ""}`} 
-            role="list">
+            <ul
+                className={`meanings-list ${active ? "active" : ""}`}
+                role="list"
+            >
                 {meanings}
             </ul>
         </>

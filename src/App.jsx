@@ -1,32 +1,28 @@
-import { Outlet, Form, redirect } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import { SearchHeader } from "./search_page.jsx";
 
-export async function searchAction({ request }) {
-    const data = await request.formData();
-    const query = data.get("query").trim();
-    if (!query) {
-        return redirect("/");
+function Header() {
+    const location = useLocation();
+    if (location.pathname === "/search") {
+        return <SearchHeader />;
     }
-    return redirect(`/search/${query}`);
+
+    return (
+        <header className="main-header">
+            <Link to={"/"}>
+                <i className="bx bx-home"></i>
+            </Link>
+            <Link to={"/search"}>
+                <i className="bx bx-search"></i>
+            </Link>
+        </header>
+    );
 }
 
 export default function App() {
     return (
         <>
-            <header>
-                <search>
-                    <Form method="post">
-                        <button>
-                            <i className="bx bx-search"></i>
-                        </button>
-                        <input
-                            name="query"
-                            type="search"
-                            autoComplete="off"
-                            placeholder="find something"
-                        />
-                    </Form>
-                </search>
-            </header>
+            <Header />
             <Outlet />
         </>
     );
