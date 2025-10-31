@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useLoaderData } from "react-router-dom";
 
 export async function dictPageLoader({ params }) {
@@ -11,6 +11,7 @@ export async function dictPageLoader({ params }) {
 
     let history = localStorage.getItem("history");
     history = history ? JSON.parse(history) : [];
+    //Any query must only appear once in history.
     for (let i = 0; i < history.length; i++) {
         if (history[i] === query) {
             history.splice(i, 1);
@@ -64,7 +65,36 @@ function Word({ word }) {
         );
     });
 
-    const [active, setActive] = useState(false);
+    const audioCtx = new AudioContext();
+    let audioBuf;
+    let playingAudio = false;
+    const audioURL = word.phonetics?.[0]?.audio;
+    if (audioURL) {
+        fetch(audioURL)
+            .then((res) => res.blob())
+            .then((blob) => blob.arrayBuffer())
+            .then((arrBuf) => audioCtx.decodeAudioData(arrBuf))
+            .then((buffer) => (audioBuf = buffer));
+    }
+
+    const playBtnRef = useRef(null);
+    function playAudio() {
+        if (playingAudio) {
+            return;
+        }
+        const source = audioCtx.createBufferSource();
+        source.buffer = audioBuf;
+        source.connect(audioCtx.destination);
+        source.start();
+        playBtnRef.current.classList.add("disabled");
+        playingAudio = true;
+        source.addEventListener("ended", () => {
+            playBtnRef.current.classList.remove("disabled");
+            playingAudio = false;
+        });
+    }
+
+    const [wordExpanded, setWordExpanded] = useState(false);
 
     return (
         <>
@@ -72,18 +102,27 @@ function Word({ word }) {
                 <h2>
                     {word.word} {word.phonetic && `- ${word.phonetic}`}
                 </h2>
+                {audioURL && (
+                    <button
+                        onClick={playAudio}
+                        ref={playBtnRef}
+                        className="play-btn"
+                    >
+                        <i className="bx  bx-play"></i>
+                    </button>
+                )}
                 <button
                     onClick={() => {
-                        setActive(!active);
+                        setWordExpanded(!wordExpanded);
                     }}
                 >
                     <i
-                        className={`bx bx-chevron-${active ? "down" : "left"}`}
+                        className={`bx bx-chevron-${wordExpanded ? "down" : "left"}`}
                     ></i>
                 </button>
             </div>
             <ul
-                className={`meanings-list ${active ? "active" : ""}`}
+                className={`meanings-list ${wordExpanded ? "active" : ""}`}
                 role="list"
             >
                 {meanings}
