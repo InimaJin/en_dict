@@ -1,10 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import History, { searchAction } from "./search_page.jsx";
+
 import App from "./App.jsx";
+import History, { searchAction } from "./search_page.jsx";
 import DictPage, { dictPageLoader } from "./dict_page.jsx";
 import { EntryNotFound } from "./error_elements.jsx";
+import Favorites, { favoritesLoader } from "./favs_page.jsx";
 
 const router = createBrowserRouter([
     {
@@ -25,6 +27,11 @@ const router = createBrowserRouter([
                 loader: dictPageLoader,
                 element: <DictPage />,
                 errorElement: <EntryNotFound />,
+            },
+            {
+                path: "favorites",
+                loader: favoritesLoader,
+                element: <Favorites />,
             },
         ],
     },

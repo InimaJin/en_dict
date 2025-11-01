@@ -10,25 +10,29 @@ header {
     height: 6vh;
     padding: 2vw;
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
 }
 
 .main-header {
-    background: #7a85c1;
-    gap: 8px;
+    background: #b2b0e8;
+
+    div {
+        height: 100%;
+        display: flex;
+        gap: 8px;
+    }
 
     a {
         height: 100%;
-        aspect-ratio: 1 / 1;
         text-decoration: none;
         background: white;
-        padding: 4px;
+        color: black;
+        aspect-ratio: 1 / 1;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
-        color: black;
 
         i {
             font-weight: bold;
@@ -95,7 +99,7 @@ ul {
 .words-list {
     padding: 24px;
     list-style-type: none;
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: bold;
 
     display: flex;
@@ -135,7 +139,7 @@ ul {
 
 .meanings-list {
     list-style-type: none;
-    font-size: 0.6em;
+    font-size: 0.7em;
     font-weight: initial;
 
     opacity: 1;
@@ -201,6 +205,57 @@ ul {
             text-decoration: none;
             color: black;
             font-size: 1.2rem;
+        }
+    }
+}
+
+.favorite-btn {
+    position: absolute;
+    right: 2vw;
+    bottom: 2vw;
+    width: 10vw;
+    height: 10vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    font-size: 2rem;
+    background: #7a85c1;
+    color: white;
+}
+
+.favorites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+    padding: 4vw;
+
+    li {
+        background: #b2b0e8;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 6px;
+        font-size: 2rem;
+        border-radius: 6px;
+
+        a {
+            text-decoration: none;
+            color: initial;
+        }
+
+        button {
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: inherit;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
 }

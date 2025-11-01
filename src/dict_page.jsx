@@ -1,5 +1,6 @@
-import { useState, useRef } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useState } from "react";
+import { useLoaderData, useParams } from "react-router-dom";
+import { addFavorite, loadFavorites, removeFavorite } from "./util";
 
 export async function dictPageLoader({ params }) {
     const query = params.query;
@@ -24,6 +25,9 @@ export async function dictPageLoader({ params }) {
     return await response.json();
 }
 
+/**
+ *  An entry in the dictionary.
+ */
 export default function DictPage() {
     const json = useLoaderData();
 
@@ -35,13 +39,22 @@ export default function DictPage() {
         );
     });
 
+    const { query } = useParams();
+
     return (
-        <article>
-            <ul className="words-list">{words}</ul>
-        </article>
+        <>
+            <article>
+                <ul className="words-list">{words}</ul>
+            </article>
+            <FavButton query={query} />
+        </>
     );
 }
 
+/**
+ * One part of the dictionary entry. Can have multiple meanings, each of which can have multiple definitions.
+ * @param {Object} word the word object
+ */
 function Word({ word }) {
     const meanings = word.meanings.map((meaning, i) => {
         const definitions = meaning.definitions.map((def, j) => {
@@ -67,7 +80,7 @@ function Word({ word }) {
 
     const audioCtx = new AudioContext();
     let audioBuf;
-    let playingAudio = false;
+    const [playingAudio, setPlayingAudio] = useState(false);
     const audioURL = word.phonetics?.[0]?.audio;
     if (audioURL) {
         fetch(audioURL)
@@ -77,7 +90,6 @@ function Word({ word }) {
             .then((buffer) => (audioBuf = buffer));
     }
 
-    const playBtnRef = useRef(null);
     function playAudio() {
         if (playingAudio) {
             return;
@@ -86,11 +98,10 @@ function Word({ word }) {
         source.buffer = audioBuf;
         source.connect(audioCtx.destination);
         source.start();
-        playBtnRef.current.classList.add("disabled");
-        playingAudio = true;
+
+        setPlayingAudio(true);
         source.addEventListener("ended", () => {
-            playBtnRef.current.classList.remove("disabled");
-            playingAudio = false;
+            setPlayingAudio(false);
         });
     }
 
@@ -105,8 +116,7 @@ function Word({ word }) {
                 {audioURL && (
                     <button
                         onClick={playAudio}
-                        ref={playBtnRef}
-                        className="play-btn"
+                        className={`play-btn ${playingAudio ? "disabled" : ""}`}
                     >
                         <i className="bx  bx-play"></i>
                     </button>
@@ -128,5 +138,30 @@ function Word({ word }) {
                 {meanings}
             </ul>
         </>
+    );
+}
+
+/**
+ * The button at the bottom right for adding/ removing an entry to/ from favorites.
+ * @param {String} query the title of the entry
+ */
+function FavButton({ query }) {
+    const favs = loadFavorites();
+    const [isFavorite, setIsFavorite] = useState(favs.includes(query));
+
+    function toggleFavorite() {
+        if (isFavorite) {
+            removeFavorite(query);
+        } else {
+            addFavorite(query);
+        }
+
+        setIsFavorite(!isFavorite);
+    }
+
+    return (
+        <button className="favorite-btn" onClick={toggleFavorite}>
+            <i className={`bx  bx${isFavorite ? "s" : ""}-heart`}></i>
+        </button>
     );
 }
