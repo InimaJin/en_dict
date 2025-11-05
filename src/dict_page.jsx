@@ -46,14 +46,14 @@ export default function DictPage() {
             <article>
                 <ul className="words-list">{words}</ul>
             </article>
-            <FavButton query={query} />
+            <FavButton query={query} json={json} />
         </>
     );
 }
 
 /**
  * One part of the dictionary entry. Can have multiple meanings, each of which can have multiple definitions.
- * @param {Object} word the word object
+ * @param {object} word the word object
  */
 function Word({ word }) {
     const meanings = word.meanings.map((meaning, i) => {
@@ -81,7 +81,7 @@ function Word({ word }) {
     const audioCtx = new AudioContext();
     let audioBuf;
     const [playingAudio, setPlayingAudio] = useState(false);
-    const audioURL = word.phonetics?.[0]?.audio;
+    const audioURL = word.phonetics?.[0].audio;
     if (audioURL) {
         fetch(audioURL)
             .then((res) => res.blob())
@@ -117,6 +117,7 @@ function Word({ word }) {
                     <button
                         onClick={playAudio}
                         className={`play-btn ${playingAudio ? "disabled" : ""}`}
+                        aria-label="play audio"
                     >
                         <i className="bx  bx-play"></i>
                     </button>
@@ -144,23 +145,40 @@ function Word({ word }) {
 /**
  * The button at the bottom right for adding/ removing an entry to/ from favorites.
  * @param {String} query the title of the entry
+ * @param {object} json JSON representing this entry
  */
-function FavButton({ query }) {
+function FavButton({ query, json }) {
     const favs = loadFavorites();
-    const [isFavorite, setIsFavorite] = useState(favs.includes(query));
+    const [isFavorite, setIsFavorite] = useState(
+        favs.some((obj) => obj.title === query)
+    );
 
     function toggleFavorite() {
         if (isFavorite) {
             removeFavorite(query);
         } else {
-            addFavorite(query);
+            const DEFINITION_MAX_LEN = 30;
+            let sneakPeek = json?.[0].meanings?.[0].definitions;
+            sneakPeek = sneakPeek.slice(0, 2).map((obj) => {
+                let def = obj.definition;
+                if (def.length > DEFINITION_MAX_LEN) {
+                    def = def.slice(0, DEFINITION_MAX_LEN) + " [...]";
+                }
+                return def;
+            });
+
+            addFavorite(query, sneakPeek);
         }
 
         setIsFavorite(!isFavorite);
     }
 
     return (
-        <button className="favorite-btn" onClick={toggleFavorite}>
+        <button
+            className="favorite-btn"
+            onClick={toggleFavorite}
+            aria-label="set favorite"
+        >
             <i className={`bx  bx${isFavorite ? "s" : ""}-heart`}></i>
         </button>
     );

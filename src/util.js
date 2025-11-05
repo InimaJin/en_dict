@@ -8,16 +8,20 @@ export function loadFavorites() {
     return favorites ? JSON.parse(favorites) : [];
 }
 
-export function addFavorite(query) {
+export function addFavorite(query, sneakPeek) {
     const favorites = loadFavorites();
-    if (!favorites.includes(query)) {
-        favorites.push(query);
+    const alreadyFav = favorites.some((obj) => obj.title === query);
+    if (!alreadyFav) {
+        favorites.push({
+            title: query,
+            sneakPeek: sneakPeek,
+        });
         writeFavorites(favorites);
     }
 }
 
 export function removeFavorite(query) {
     let favorites = loadFavorites();
-    favorites = favorites.filter((f) => f !== query);
+    favorites = favorites.filter((obj) => obj.title !== query);
     writeFavorites(favorites);
 }

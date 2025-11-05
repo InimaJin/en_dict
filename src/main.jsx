@@ -6,7 +6,7 @@ import App from "./App.jsx";
 import History, { searchAction } from "./search_page.jsx";
 import DictPage, { dictPageLoader } from "./dict_page.jsx";
 import { EntryNotFound } from "./error_elements.jsx";
-import Favorites, { favoritesLoader } from "./favs_page.jsx";
+import FavoritesList, { favoritesLoader } from "./favs_page.jsx";
 
 const router = createBrowserRouter([
     {
@@ -31,7 +31,7 @@ const router = createBrowserRouter([
             {
                 path: "favorites",
                 loader: favoritesLoader,
-                element: <Favorites />,
+                element: <FavoritesList />,
             },
         ],
     },

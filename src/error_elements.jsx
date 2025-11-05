@@ -14,8 +14,9 @@ export function EntryNotFound() {
             countdown--;
             if (countdown === 0) {
                 navigate("/search");
+            } else {
+                countdownRef.current.innerText = countdown;
             }
-            countdownRef.current.innerText = countdown;
         }, 1000);
         return () => {
             clearInterval(intID);
