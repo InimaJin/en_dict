@@ -81,7 +81,7 @@ function Word({ word }) {
     const audioCtx = new AudioContext();
     let audioBuf;
     const [playingAudio, setPlayingAudio] = useState(false);
-    const audioURL = word.phonetics?.[0].audio;
+    const audioURL = word.phonetics?.[0]?.audio;
     if (audioURL) {
         fetch(audioURL)
             .then((res) => res.blob())

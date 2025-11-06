@@ -1,23 +1,41 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
-import { SearchHeader } from "./search_page.jsx";
 
 function Header() {
     const location = useLocation();
-    if (location.pathname === "/search") {
-        return <SearchHeader />;
+
+    const NAV_PATHS = {
+        root: "/",
+        search: "/search",
+        favorites: "/favorites",
+    };
+
+    function activeLinkClass(link) {
+        return location.pathname === link ? "active" : "";
     }
 
     return (
         <header className="main-header">
             <div>
-                <Link to={"/"} aria-label="home">
+                <Link
+                    to={NAV_PATHS.root}
+                    aria-label="home"
+                    className={activeLinkClass(NAV_PATHS.root)}
+                >
                     <i className="bx bx-home"></i>
                 </Link>
-                <Link to={"/search"} aria-label="search">
+                <Link
+                    to={NAV_PATHS.search}
+                    aria-label="search"
+                    className={activeLinkClass(NAV_PATHS.search)}
+                >
                     <i className="bx bx-search"></i>
                 </Link>
             </div>
-            <Link to={"/favorites"} aria-label="favorites">
+            <Link
+                to={NAV_PATHS.favorites}
+                aria-label="favorites"
+                className={activeLinkClass(NAV_PATHS.favorites)}
+            >
                 <i className="bx  bx-bookmarks"></i>
             </Link>
         </header>
