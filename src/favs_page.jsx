@@ -27,11 +27,11 @@ export default function FavoritesList() {
                 >
                     <i className="bx  bxs-trash"></i>
                 </button>
-                    <ul className="fav-sneak-peek">
-                        {obj.sneakPeek.map((str, i) => (
-                            <li key={i}>{str}</li>
-                        ))}
-                    </ul>
+                <ul className="fav-sneak-peek">
+                    {obj.sneakPeek.map((str, i) => (
+                        <li key={i}>{str}</li>
+                    ))}
+                </ul>
             </li>
         );
     });

@@ -111,7 +111,8 @@ function Word({ word }) {
         <>
             <div>
                 <h2>
-                    {word.word}{word.phonetic && ` - ${word.phonetic}`}
+                    {word.word}
+                    {word.phonetic && ` - ${word.phonetic}`}
                 </h2>
                 {audioURL && (
                     <button
@@ -133,10 +134,7 @@ function Word({ word }) {
                 </button>
             </div>
             {wordExpanded && (
-                <ul
-                    className="meanings-list"
-                    role="list"
-                >
+                <ul className="meanings-list" role="list">
                     {meanings}
                 </ul>
             )}
