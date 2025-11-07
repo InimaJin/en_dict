@@ -197,13 +197,13 @@ ul {
         font-weight: bold;
     }
 }
-
+/*
 .meanings-list:not(.active) {
     opacity: 0;
     max-height: 0;
     pointer-events: none;
 }
-
+*/
 .definitions-list {
     list-style: disc outside;
     display: flex;
@@ -222,7 +222,7 @@ ul {
 }
 
 .favorite-btn {
-    position: absolute;
+    position: fixed;
     right: 2vw;
     bottom: 2vw;
     width: 10vw;
