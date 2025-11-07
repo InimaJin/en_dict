@@ -14,7 +14,7 @@ function Header() {
     }
 
     return (
-        <header className="main-header">
+        <header>
             <div>
                 <Link
                     to={NAV_PATHS.root}
@@ -46,7 +46,9 @@ export default function App() {
     return (
         <>
             <Header />
-            <Outlet />
+            <div className="content-window">
+                <Outlet />
+            </div>
         </>
     );
 }
