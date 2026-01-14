@@ -44,7 +44,7 @@ export default function SearchPage() {
     }, []);
 
     return (
-        <>
+        <div className="search-wrapper">
             <SearchHeader inputRef={searchInputRef} />
             <div className="history">
                 <h2>Recent queries</h2>
@@ -58,6 +58,6 @@ export default function SearchPage() {
                     })}
                 </ul>
             </div>
-        </>
+        </div>
     );
 }

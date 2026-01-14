@@ -59,6 +59,58 @@ header {
 .content-window {
     margin-top: 6vh;
     width: 100vw;
+    height: 94dvh;
+}
+
+@keyframes slide-down {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.home-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+
+    i {
+        color: rgba(0, 0, 0, 0.25);
+        font-size: 6rem;
+        margin-left: -30%;
+        animation: slide-down 1s;
+    }
+
+    > div > div {
+        margin-top: -20%;
+        animation: fade-in 2s ease-in;
+    }
+}
+
+.search-wrapper {
+    height: 100%;
 }
 
 search {
@@ -96,7 +148,7 @@ search {
 }
 
 .history {
-    padding: 3vw 5vw;
+    padding: 3vw 5vw 5vw 5vw;
 
     h2 {
         margin-bottom: 16px;

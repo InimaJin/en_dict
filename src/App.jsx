@@ -42,6 +42,22 @@ function Header() {
     );
 }
 
+export function Home() {
+    return (
+        <>
+            <div className="home-wrapper">
+                <div>
+                    <i className="bx bx-reading"></i>
+                    <div>
+                        <h1>Welcome!</h1>
+                        <p>/ˈwɛlkəm/</p>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
+
 export default function App() {
     return (
         <>

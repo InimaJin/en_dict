@@ -53,7 +53,7 @@ export default function DictPage() {
 
 /**
  * One part of the dictionary entry. Can have multiple meanings, each of which can have multiple definitions.
- * @param {object} word the word object
+ * @param {object} word the word object from the API's JSON-response
  */
 function Word({ word }) {
     const meanings = word.meanings.map((meaning, i) => {
