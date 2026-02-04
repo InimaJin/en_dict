@@ -10,8 +10,13 @@ export async function searchAction({ request }) {
     return redirect(`/search/${query}`);
 }
 
-function SearchHeader({ inputRef }) {
+function SearchHeader() {
     const [input, setInput] = useState("");
+
+    const inputRef = useRef(null);
+    useEffect(() => {
+        inputRef.current.focus();
+    }, []);
 
     return (
         <search>
@@ -20,7 +25,7 @@ function SearchHeader({ inputRef }) {
                     name="query"
                     type="text"
                     autoComplete="off"
-                    placeholder="find something"
+                    placeholder="consult the dictionary..."
                     ref={inputRef}
                     onChange={(e) => {
                         setInput(e.target.value);
@@ -38,14 +43,9 @@ export default function SearchPage() {
     let history = localStorage.getItem("history");
     history = history ? JSON.parse(history) : [];
 
-    const searchInputRef = useRef(null);
-    useEffect(() => {
-        searchInputRef.current.focus();
-    }, []);
-
     return (
         <div className="search-wrapper">
-            <SearchHeader inputRef={searchInputRef} />
+            <SearchHeader />
             <div className="history">
                 <h2>Recent queries</h2>
                 <ul>

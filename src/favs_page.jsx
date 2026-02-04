@@ -10,6 +10,7 @@ export async function favoritesLoader() {
 export default function FavoritesList() {
     const [favorites, setFavorites] = useState(useLoaderData());
     favorites.sort((obj1, obj2) => obj1.title.localeCompare(obj2.title));
+
     const favsList = favorites.map((obj) => {
         const title = obj.title;
         return (

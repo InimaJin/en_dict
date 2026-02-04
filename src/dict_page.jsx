@@ -22,19 +22,52 @@ export async function dictPageLoader({ params }) {
     history.push(query);
     localStorage.setItem("history", JSON.stringify(history));
 
-    return await response.json();
+    const json = await response.json();
+
+    //Merging objects that have the same "word" and "phonetic" keys.
+    const map = new Map();
+    for (const wordObj of await json) {
+        const s = wordObj.word + (wordObj.phonetic ?? "");
+        //If a word with the same spelling and pronounciation has been found already,
+        //that object becomes the "accumulator" (acc).
+        const acc = map.get(s);
+        if (!acc) {
+            map.set(s, wordObj);
+            continue;
+        }
+
+        for (const meaning of wordObj.meanings) {
+            const accMeaning = acc.meanings.find(
+                (m) => m.partOfSpeech === meaning.partOfSpeech
+            );
+            if (!accMeaning) {
+                acc.meanings.push(meaning);
+            } else {
+                for (const definition of meaning.definitions) {
+                    accMeaning.definitions.push(definition);
+                }
+            }
+        }
+    }
+
+    return map;
 }
 
 /**
  *  An entry in the dictionary.
  */
 export default function DictPage() {
-    const json = useLoaderData();
+    const map = useLoaderData();
 
-    const words = json.map((word, i) => {
-        return (
-            <li key={i}>
-                <Word word={word} />
+    let firstWordObj;
+    const words = [];
+    map.forEach((value, key) => {
+        if (!firstWordObj) {
+            firstWordObj = value;
+        }
+        words.push(
+            <li key={key}>
+                <Word word={value} />
             </li>
         );
     });
@@ -43,10 +76,10 @@ export default function DictPage() {
 
     return (
         <>
-            <article>
+            <article className="dict-entry">
                 <ul className="words-list">{words}</ul>
             </article>
-            <FavButton query={query} json={json} />
+            <FavButton query={query} firstWordObj={firstWordObj} />
         </>
     );
 }
@@ -145,9 +178,9 @@ function Word({ word }) {
 /**
  * The button at the bottom right for adding/ removing an entry to/ from favorites.
  * @param {String} query the title of the entry
- * @param {object} json JSON representing this entry
+ * @param {object} firstWordObj this entry's first word object
  */
-function FavButton({ query, json }) {
+function FavButton({ query, firstWordObj }) {
     const favs = loadFavorites();
     const [isFavorite, setIsFavorite] = useState(
         favs.some((obj) => obj.title === query)
@@ -158,7 +191,7 @@ function FavButton({ query, json }) {
             removeFavorite(query);
         } else {
             const DEFINITION_MAX_LEN = 30;
-            let sneakPeek = json?.[0].meanings?.[0].definitions;
+            let sneakPeek = firstWordObj?.meanings?.[0].definitions;
             sneakPeek = sneakPeek.slice(0, 2).map((obj) => {
                 let def = obj.definition;
                 if (def.length > DEFINITION_MAX_LEN) {

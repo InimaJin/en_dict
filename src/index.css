@@ -11,7 +11,7 @@ header {
     left: 0;
     width: 100vw;
     height: 6vh;
-    padding: 2vw;
+    padding: 8px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -47,18 +47,19 @@ header {
         width: 60%;
         height: 3px;
         border-radius: 15px;
-        background: transparent;
-        transition: background 0.5s;
+        opacity: 0;
+        background: white;
+        transition: opacity 0.5s;
     }
 
     a.active::after {
-        background: white;
+        opacity: 1;
     }
 }
 
 .content-window {
     margin-top: 6vh;
-    width: 100vw;
+    width: 100%;
     height: 94dvh;
 }
 
@@ -97,7 +98,7 @@ header {
     pointer-events: none;
 
     i {
-        color: rgba(0, 0, 0, 0.25);
+        color: rgba(0, 0, 0, 0.22);
         font-size: 6rem;
         margin-left: -30%;
         animation: slide-down 1s;
@@ -111,11 +112,14 @@ header {
 
 .search-wrapper {
     height: 100%;
+    padding: 16px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 search {
-    width: 100%;
-    padding: 5vw 5vw 2vw 5vw;
+    height: 5%;
 
     form {
         width: 100%;
@@ -141,17 +145,20 @@ search {
 
     input {
         width: 100%;
-        border: none;
         background: transparent;
         outline: none;
+        border: none;
+        color: black;
     }
 }
 
 .history {
-    padding: 3vw 5vw 5vw 5vw;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
 
     h2 {
-        margin-bottom: 16px;
         font-size: 1.4rem;
     }
 
@@ -160,9 +167,12 @@ search {
         list-style: none;
         display: flex;
         flex-flow: column;
-        align-items: stretch;
+        align-items: start;
         justify-content: start;
         gap: 12px;
+
+        overflow-y: scroll;
+        scrollbar-color: #090040 transparent;
 
         a {
             text-decoration: none;
@@ -195,6 +205,10 @@ search {
 
 ul {
     padding-left: 24px;
+}
+
+article.dict-entry {
+    padding-bottom: 64px;
 }
 
 .words-list {
@@ -243,10 +257,8 @@ ul {
     font-size: 0.7em;
     font-weight: initial;
 
-    max-height: 5000px;
-
     display: flex;
-    flex-flow: column;
+    flex-direction: column;
     gap: 16px;
 
     h3 {
@@ -275,8 +287,8 @@ ul {
     position: fixed;
     right: 2vw;
     bottom: 2vw;
-    width: 10vw;
-    height: 10vw;
+    width: 64px;
+    height: 64px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -292,9 +304,9 @@ ul {
 .favorites-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 24px;
     list-style: none;
-    padding: 1vw 2vw;
+    padding: 16px 24px;
 }
 
 .favorites-list > li {
@@ -302,7 +314,7 @@ ul {
     grid-template-columns: 2fr 1fr;
     grid-template-rows: min-content 1fr;
     gap: 5px;
-    padding: 4vw 2vw;
+    padding-bottom: 24px;
 
     a {
         text-decoration: none;
