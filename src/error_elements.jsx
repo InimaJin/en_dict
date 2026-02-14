@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRouteError, useNavigate } from "react-router-dom";
 
 export function EntryNotFound() {
@@ -7,16 +7,16 @@ export function EntryNotFound() {
 
     const navigate = useNavigate();
 
-    const countdownRef = useRef(null);
-    let countdown = 6;
+    const [countdown, setCountdown] = useState(5);
     useEffect(() => {
         const intID = setInterval(() => {
-            countdown--;
-            if (countdown === 0) {
-                navigate("/search");
-            } else {
-                countdownRef.current.innerText = countdown;
-            }
+            setCountdown((prev) => {
+                if (prev == 1) {
+                    navigate("/search");
+                    return 0;
+                }
+                return prev - 1;
+            });
         }, 1000);
         return () => {
             clearInterval(intID);
@@ -33,7 +33,7 @@ export function EntryNotFound() {
                 </p>
                 <p>Automatically redirecting you...</p>
             </div>
-            <div className="error-countdown" ref={countdownRef} />
+            <div className="error-countdown">{countdown}</div>
         </>
     );
 }

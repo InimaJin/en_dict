@@ -24,7 +24,8 @@ header {
         gap: 8px;
     }
 
-    a {
+    a,
+    button {
         position: relative;
         height: 100%;
         text-decoration: none;
@@ -37,9 +38,12 @@ header {
         transition:
             background 0.2s,
             color 0.2s;
+        border: none;
+        font-size: 1rem;
     }
 
-    a::after {
+    a::after,
+    button::after {
         content: "";
         position: absolute;
         left: 20%;
@@ -60,7 +64,72 @@ header {
 .content-window {
     margin-top: 6vh;
     width: 100%;
-    height: 94dvh;
+    min-height: 94dvh;
+}
+
+#root div.dark {
+    header {
+        background: #5c1a1a;
+    }
+
+    .content-window {
+        background: #181c22;
+    }
+
+    .home-wrapper {
+        color: white;
+
+        i {
+            color: rgba(255, 255, 255, 0.14);
+        }
+    }
+
+    .search-wrapper * {
+        color: white;
+    }
+
+    .history ul {
+        scrollbar-color: white transparent;
+    }
+
+    .dict-entry {
+        .words-list,
+        button i {
+            color: white;
+        }
+
+        .example::before {
+            color: #ff5252;
+        }
+    }
+
+    .favorite-btn {
+        background: #5c1a1a;
+    }
+
+    .favorites-list {
+        li,
+        a {
+            color: white;
+        }
+
+        > li:not(:last-child) {
+            border-bottom-color: #5c1a1a;
+        }
+
+        li button {
+            color: #5c1a1a;
+        }
+    }
+
+    .entry-not-found,
+    .error-countdown {
+        color: white;
+    }
+}
+
+button {
+    cursor: pointer;
 }
 
 @keyframes slide-down {
@@ -89,7 +158,7 @@ header {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100dvh;
     display: flex;
     flex-direction: column;
@@ -111,7 +180,7 @@ header {
 }
 
 .search-wrapper {
-    height: 100%;
+    height: 94dvh;
     padding: 16px 24px;
     display: flex;
     flex-direction: column;
@@ -190,17 +259,19 @@ search {
 }
 
 .error-countdown {
-    z-index: -1;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100dvh;
+    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 50vw;
-    color: rgba(0, 0, 0, 0.363);
+    opacity: 0.3;
+    user-select: none;
+    pointer-events: none;
 }
 
 ul {
@@ -344,5 +415,7 @@ article.dict-entry {
 }
 
 .favorites-list > li:not(:last-child) {
-    border-bottom: 1px solid #090040;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #090040;
 }

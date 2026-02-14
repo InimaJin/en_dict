@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 
-function Header() {
+function Header({ currentDisplayMode, toggleNextDisplayMode }) {
     const location = useLocation();
 
     const NAV_PATHS = {
@@ -11,6 +12,13 @@ function Header() {
 
     function activeLinkClass(link) {
         return location.pathname === link ? "active" : "";
+    }
+
+    let displayModeClass;
+    if (currentDisplayMode == "light") {
+        displayModeClass = "sun";
+    } else {
+        displayModeClass = "moon-stars";
     }
 
     return (
@@ -31,13 +39,21 @@ function Header() {
                     <i className="bx bx-search"></i>
                 </Link>
             </div>
-            <Link
-                to={NAV_PATHS.favorites}
-                aria-label="favorites"
-                className={activeLinkClass(NAV_PATHS.favorites)}
-            >
-                <i className="bx  bx-bookmarks"></i>
-            </Link>
+            <div>
+                <button
+                    aria-label="toggle display mode"
+                    onClick={toggleNextDisplayMode}
+                >
+                    <i className={`bx bx-${displayModeClass}`} />
+                </button>
+                <Link
+                    to={NAV_PATHS.favorites}
+                    aria-label="favorites"
+                    className={activeLinkClass(NAV_PATHS.favorites)}
+                >
+                    <i className="bx  bx-bookmarks"></i>
+                </Link>
+            </div>
         </header>
     );
 }
@@ -59,12 +75,24 @@ export function Home() {
 }
 
 export default function App() {
+    const modes = ["light", "dark"];
+    const [displayModeIdx, setDisplayModeIdx] = useState(0);
+    const currentDisplayMode = modes[displayModeIdx];
+
+    function toggleNextDisplayMode() {
+        const nextIdx = (displayModeIdx + 1) % modes.length;
+        setDisplayModeIdx(nextIdx);
+    }
+
     return (
-        <>
-            <Header />
+        <div className={`${currentDisplayMode}`}>
+            <Header
+                currentDisplayMode={currentDisplayMode}
+                toggleNextDisplayMode={toggleNextDisplayMode}
+            />
             <div className="content-window">
                 <Outlet />
             </div>
-        </>
+        </div>
     );
 }

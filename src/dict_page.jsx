@@ -12,7 +12,7 @@ export async function dictPageLoader({ params }) {
 
     let history = localStorage.getItem("history");
     history = history ? JSON.parse(history) : [];
-    //Any query must only appear once in history.
+    //Any query must only appear at most once in history.
     for (let i = 0; i < history.length; i++) {
         if (history[i] === query) {
             history.splice(i, 1);
