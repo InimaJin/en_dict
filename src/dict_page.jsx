@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useLoaderData, useParams } from "react-router-dom";
-import { addFavorite, loadFavorites, removeFavorite } from "./util";
+import {
+    addFavorite,
+    loadFavorites,
+    loadHistory,
+    removeFavorite,
+    writeHistory,
+} from "./util";
 
 export async function dictPageLoader({ params }) {
     const query = params.query;
@@ -10,8 +16,7 @@ export async function dictPageLoader({ params }) {
         throw new Error(query);
     }
 
-    let history = localStorage.getItem("history");
-    history = history ? JSON.parse(history) : [];
+    let history = loadHistory();
     //Any query must only appear at most once in history.
     for (let i = 0; i < history.length; i++) {
         if (history[i] === query) {
@@ -20,7 +25,7 @@ export async function dictPageLoader({ params }) {
         }
     }
     history.push(query);
-    localStorage.setItem("history", JSON.stringify(history));
+    writeHistory(history);
 
     const json = await response.json();
 
@@ -77,7 +82,7 @@ export default function DictPage() {
     return (
         <>
             <article className="dict-entry">
-                <ul className="words-list">{words}</ul>
+                <ul className="words-list padded-wrapper">{words}</ul>
             </article>
             <FavButton query={query} firstWordObj={firstWordObj} />
         </>

@@ -9,7 +9,7 @@ export function EntryNotFound() {
 
     const [countdown, setCountdown] = useState(5);
     useEffect(() => {
-        const intID = setInterval(() => {
+        const timeoutID = setTimeout(() => {
             setCountdown((prev) => {
                 if (prev == 1) {
                     navigate("/search");
@@ -19,9 +19,9 @@ export function EntryNotFound() {
             });
         }, 1000);
         return () => {
-            clearInterval(intID);
+            clearTimeout(timeoutID);
         };
-    }, []);
+    });
 
     return (
         <>

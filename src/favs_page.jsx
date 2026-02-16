@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useLoaderData, Link } from "react-router-dom";
 
-import { loadFavorites, writeFavorites } from "./util";
+import { loadFavorites, removeFavorite } from "./util";
 
 export async function favoritesLoader() {
     return loadFavorites();
 }
 
+//TODO: Should display a short text if the favorites list is empty.
 export default function FavoritesList() {
     const [favorites, setFavorites] = useState(useLoaderData());
     favorites.sort((obj1, obj2) => obj1.title.localeCompare(obj2.title));
@@ -18,11 +19,9 @@ export default function FavoritesList() {
                 <Link to={`/search/${title}`}>{title}</Link>
                 <button
                     onClick={() => {
-                        const nextFavorites = favorites.filter(
-                            (obj) => obj.title !== title
-                        );
+                        removeFavorite(title);
+                        const nextFavorites = loadFavorites();
                         setFavorites(nextFavorites);
-                        writeFavorites(nextFavorites);
                     }}
                     aria-label="remove from favorites"
                 >
@@ -37,5 +36,5 @@ export default function FavoritesList() {
         );
     });
 
-    return <ul className="favorites-list">{favsList}</ul>;
+    return <ul className="favorites-list padded-wrapper">{favsList}</ul>;
 }

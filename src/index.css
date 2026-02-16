@@ -24,8 +24,7 @@ header {
         gap: 8px;
     }
 
-    a,
-    button {
+    a {
         position: relative;
         height: 100%;
         text-decoration: none;
@@ -61,20 +60,18 @@ header {
     }
 }
 
+header.dark {
+    background: #5c1a1a;
+}
+
 .content-window {
     margin-top: 6vh;
     width: 100%;
     min-height: 94dvh;
 }
 
-#root div.dark {
-    header {
-        background: #5c1a1a;
-    }
-
-    .content-window {
-        background: #181c22;
-    }
+.content-window.dark {
+    background: #181c22;
 
     .home-wrapper {
         color: white;
@@ -120,6 +117,19 @@ header {
         li button {
             color: #5c1a1a;
         }
+    }
+
+    .simple-btn {
+        background: #5c1a1a;
+    }
+
+    .settings-wrapper {
+        color: white;
+    }
+
+    .confirm-dialog {
+        background: #181c22;
+        color: white;
     }
 
     .entry-not-found,
@@ -179,9 +189,12 @@ button {
     }
 }
 
+.padded-wrapper {
+    padding: 16px 24px;
+}
+
 .search-wrapper {
     height: 94dvh;
-    padding: 16px 24px;
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -283,7 +296,6 @@ article.dict-entry {
 }
 
 .words-list {
-    padding: 24px;
     list-style-type: none;
     font-size: 1.5rem;
     font-weight: bold;
@@ -377,7 +389,6 @@ article.dict-entry {
     flex-direction: column;
     gap: 24px;
     list-style: none;
-    padding: 16px 24px;
 }
 
 .favorites-list > li {
@@ -418,4 +429,74 @@ article.dict-entry {
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: #090040;
+}
+
+.simple-btn {
+    background: #3b38a0;
+    color: white;
+    padding: 4px;
+    border: none;
+    border-radius: 8px;
+}
+
+.settings-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+    section {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 40px 0;
+
+        h2 {
+            font-weight: bold;
+        }
+    }
+
+    section:first-child {
+        padding-top: 0;
+    }
+
+    section:not(:last-child) {
+        border-bottom: 1px dashed gray;
+    }
+
+    .setting-box {
+        display: flex;
+        justify-content: space-between;
+
+        h3 {
+            font-weight: normal;
+        }
+    }
+}
+
+.confirm-dialog:open {
+    position: fixed;
+    top: 3dvh;
+    left: 50%;
+    transform: translateX(-50%);
+    h1 {
+        text-wrap: nowrap;
+        font-size: 1.7rem;
+    }
+
+    border: none;
+    border-radius: 16px;
+    padding: 8px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    > div {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+::backdrop {
+    backdrop-filter: blur(10px);
 }
