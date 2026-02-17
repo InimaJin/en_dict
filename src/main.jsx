@@ -2,8 +2,8 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import App, { Home } from "./App.jsx";
-import SearchPage, { searchAction } from "./search_page.jsx";
+import App, { appLoader, Home } from "./App.jsx";
+import SearchPage, { searchAction, searchPageLoader } from "./search_page.jsx";
 import DictPage, { dictPageLoader } from "./dict_page.jsx";
 import { EntryNotFound } from "./error_elements.jsx";
 import FavoritesList, { favoritesLoader } from "./favs_page.jsx";
@@ -12,6 +12,7 @@ import SettingsPage from "./settings_page.jsx";
 const router = createBrowserRouter([
     {
         path: "/",
+        loader: appLoader,
         element: <App />,
         children: [
             {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "search",
+                loader: searchPageLoader,
                 action: searchAction,
                 element: <SearchPage />,
             },

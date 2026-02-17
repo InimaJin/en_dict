@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { redirect, Form, Link } from "react-router-dom";
+import { redirect, Form, Link, useLoaderData } from "react-router-dom";
 import { loadHistory } from "./storage";
 
 export async function searchAction({ request }) {
@@ -9,6 +9,10 @@ export async function searchAction({ request }) {
         return redirect("/search");
     }
     return redirect(`/search/${query}`);
+}
+
+export function searchPageLoader() {
+    return loadHistory();
 }
 
 function SearchHeader() {
@@ -36,7 +40,7 @@ function SearchHeader() {
 }
 
 export default function SearchPage() {
-    const history = loadHistory();
+    const history = useLoaderData();
 
     return (
         <div className="search-wrapper padded-wrapper">

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLoaderData, useLocation } from "react-router-dom";
 import { loadDisplayModeIdx, writeDisplayModeIdx } from "./storage";
+
+export function appLoader() {
+    return loadDisplayModeIdx();
+}
 
 function Header({ displayModeClass }) {
     const location = useLocation();
@@ -72,7 +76,7 @@ export function Home() {
 
 export default function App() {
     const modes = ["light", "dark", "auto"];
-    const [displayModeIdx, setDisplayModeIdx] = useState(loadDisplayModeIdx());
+    const [displayModeIdx, setDisplayModeIdx] = useState(useLoaderData());
     const currentDisplayMode = modes[displayModeIdx];
     const [displayModeClass, setDisplayModeClass] =
         useState(currentDisplayMode);

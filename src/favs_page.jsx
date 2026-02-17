@@ -39,7 +39,11 @@ export default function FavoritesList() {
     if (favsList.length !== 0) {
         element = <ul className="favorites-list padded-wrapper">{favsList}</ul>;
     } else {
-        element = <h1 className="no-favorites-msg">Saved entries will appear here.</h1>;
+        element = (
+            <h1 className="no-favorites-msg">
+                Saved entries will appear here.
+            </h1>
+        );
     }
     return element;
 }
