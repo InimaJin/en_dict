@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { writeFavorites, writeHistory } from "./util";
+import { writeFavorites, writeHistory } from "./storage";
 import { useOutletContext } from "react-router-dom";
 
 //TODO: Display the size of local data on disk.

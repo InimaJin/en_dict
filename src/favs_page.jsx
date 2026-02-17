@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLoaderData, Link } from "react-router-dom";
 
-import { loadFavorites, removeFavorite } from "./util";
+import { loadFavorites, removeFavorite } from "./storage";
 
 export async function favoritesLoader() {
     return loadFavorites();

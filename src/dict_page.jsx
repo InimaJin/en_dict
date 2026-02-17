@@ -6,7 +6,7 @@ import {
     loadHistory,
     removeFavorite,
     writeHistory,
-} from "./util";
+} from "./storage";
 
 export async function dictPageLoader({ params }) {
     const query = params.query;

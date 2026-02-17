@@ -76,6 +76,7 @@ export default function App() {
     const [displayModeClass, setDisplayModeClass] =
         useState(currentDisplayMode);
 
+    //TODO: Write displayModeIdx to localStorage and use localstorage to initialize state.
     function toggleNextDisplayMode() {
         const nextIdx = (displayModeIdx + 1) % modes.length;
         setDisplayModeIdx(nextIdx);

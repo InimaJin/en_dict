@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { redirect, Form, Link } from "react-router-dom";
-import { loadHistory } from "./util";
+import { loadHistory } from "./storage";
 
 export async function searchAction({ request }) {
     const data = await request.formData();
