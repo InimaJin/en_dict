@@ -1,3 +1,11 @@
+export function loadDisplayModeIdx() {
+    return JSON.parse(localStorage.getItem("display_mode_idx")) ?? 0;
+}
+
+export function writeDisplayModeIdx(idx) {
+    localStorage.setItem("display_mode_idx", idx);
+}
+
 export function loadFavorites() {
     const favorites = localStorage.getItem("favorites");
     return favorites ? JSON.parse(favorites) : [];

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
+import { loadDisplayModeIdx, writeDisplayModeIdx } from "./storage";
 
 function Header({ displayModeClass }) {
     const location = useLocation();
@@ -71,14 +72,14 @@ export function Home() {
 
 export default function App() {
     const modes = ["light", "dark", "auto"];
-    const [displayModeIdx, setDisplayModeIdx] = useState(0);
+    const [displayModeIdx, setDisplayModeIdx] = useState(loadDisplayModeIdx());
     const currentDisplayMode = modes[displayModeIdx];
     const [displayModeClass, setDisplayModeClass] =
         useState(currentDisplayMode);
 
-    //TODO: Write displayModeIdx to localStorage and use localstorage to initialize state.
     function toggleNextDisplayMode() {
         const nextIdx = (displayModeIdx + 1) % modes.length;
+        writeDisplayModeIdx(nextIdx);
         setDisplayModeIdx(nextIdx);
     }
 
