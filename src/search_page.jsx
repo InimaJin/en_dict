@@ -35,25 +35,26 @@ function SearchHeader() {
     );
 }
 
-//TODO: Display short message if history is empty
 export default function SearchPage() {
+    const history = loadHistory();
+
     return (
         <div className="search-wrapper padded-wrapper">
             <SearchHeader />
-            <div className="history">
-                <h2>Recent queries</h2>
-                <ul>
-                    {loadHistory()
-                        .toReversed()
-                        .map((query) => {
+            {history.length !== 0 && (
+                <div className="history">
+                    <h2>Recent queries</h2>
+                    <ul>
+                        {history.toReversed().map((query) => {
                             return (
                                 <Link to={`/search/${query}`} key={query}>
                                     <li>{query}</li>
                                 </Link>
                             );
                         })}
-                </ul>
-            </div>
+                    </ul>
+                </div>
+            )}
         </div>
     );
 }

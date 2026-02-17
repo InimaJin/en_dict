@@ -7,7 +7,6 @@ export async function favoritesLoader() {
     return loadFavorites();
 }
 
-//TODO: Should display a short text if the favorites list is empty.
 export default function FavoritesList() {
     const [favorites, setFavorites] = useState(useLoaderData());
     favorites.sort((obj1, obj2) => obj1.title.localeCompare(obj2.title));
@@ -36,5 +35,11 @@ export default function FavoritesList() {
         );
     });
 
-    return <ul className="favorites-list padded-wrapper">{favsList}</ul>;
+    let element;
+    if (favsList.length !== 0) {
+        element = <ul className="favorites-list padded-wrapper">{favsList}</ul>;
+    } else {
+        element = <h1 className="no-favorites-msg">Saved entries will appear here.</h1>;
+    }
+    return element;
 }
