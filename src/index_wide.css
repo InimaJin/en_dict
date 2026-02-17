@@ -2,4 +2,8 @@
     .search-wrapper {
         padding: 24px 32px;
     }
+
+    .settings-wrapper .setting-box h3 {
+        flex: 20;
+    }
 }

@@ -469,6 +469,11 @@ article.dict-entry {
 
         h3 {
             font-weight: normal;
+            flex: 5;
+        }
+
+        button {
+            flex: 1;
         }
     }
 }

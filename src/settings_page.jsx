@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { writeFavorites, writeHistory } from "./storage";
+import {
+    loadFavorites,
+    loadHistory,
+    writeFavorites,
+    writeHistory,
+} from "./storage";
 import { useOutletContext } from "react-router-dom";
 
-//TODO: Display the size of local data on disk.
 export default function SettingsPage() {
     const { currentDisplayMode, toggleNextDisplayMode } = useOutletContext();
     const displayMode =
@@ -21,6 +25,29 @@ export default function SettingsPage() {
             dialogRef.current.close();
         }
     });
+
+    function sizeString(data) {
+        let size;
+        if (data.length === 0) {
+            size = 0;
+        } else {
+            size = new Blob([JSON.stringify(data)]).size;
+        }
+
+        let val, unit;
+        if (size < 1024) {
+            val = size;
+            unit = "B";
+        } else if (size < 1024 * 1024) {
+            val = (size / 1024).toFixed(2);
+            unit = "KB";
+        } else {
+            val = (size / (1024 * 1024)).toFixed(2);
+            unit = "MB";
+        }
+
+        return "(" + val + unit + ")";
+    }
 
     return (
         <>
@@ -49,7 +76,7 @@ export default function SettingsPage() {
                                 });
                             }}
                         >
-                            Clear
+                            Clear {sizeString(loadHistory())}
                         </button>
                     </div>
                     <div className="setting-box">
@@ -62,7 +89,7 @@ export default function SettingsPage() {
                                 });
                             }}
                         >
-                            Clear
+                            Clear {sizeString(loadFavorites())}
                         </button>
                     </div>
                 </section>
