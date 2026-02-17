@@ -8,22 +8,24 @@ export function EntryNotFound() {
     const navigate = useNavigate();
 
     const [countdown, setCountdown] = useState(5);
-    if (countdown === 0) {
-        navigate("/search");
-    }
     useEffect(() => {
-        const intID = setInterval(() => {
-            setCountdown((prev) => {
-                if (prev == 1) {
-                    return 0;
-                }
-                return prev - 1;
-            });
-        }, 1000);
+        let t;
+        if (countdown === 0) {
+            navigate("/search");
+        } else {
+            t = setTimeout(() => {
+                setCountdown((prev) => {
+                    if (prev == 1) {
+                        return 0;
+                    }
+                    return prev - 1;
+                });
+            }, 1000);
+        }
         return () => {
-            clearInterval(intID);
+            clearTimeout(t);
         };
-    }, []);
+    });
 
     return (
         <>
